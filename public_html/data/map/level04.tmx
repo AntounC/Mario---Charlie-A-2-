@@ -27,7 +27,7 @@
  <objectgroup name="trigger-entities">
   <object name="levelTrigger" x="1046" y="430" width="74" height="132">
    <properties>
-    <property name="level02" value=""/>
+    <property name="level" value="level02"/>
    </properties>
   </object>
  </objectgroup>
