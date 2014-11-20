@@ -28,6 +28,9 @@ game.PlayerEntity = me.Entity.extend({
             } else {
                 this.body.vel.x = 0;
             }
+            
+            this.body.update(delta);
+            me.collision.check(this, true, this.collideHandler.bind(this), true);
 
             if (this.body.vel.x !== 0) {
                 if (!this.renderable.isCurrentAnimation("smallWalk")) {
@@ -38,11 +41,16 @@ game.PlayerEntity = me.Entity.extend({
                 this.renderable.setCurrentAnimation("idle");
             }
 
-            this.body.update(delta);
+            
             this._super(me.Entity, "update", [delta]);
             return true;
 
+    },
+    
+    collideHandler: function(response) {
+        
     }
+    
 });
 
 game.LevelTrigger = me.Entity.extend({
@@ -54,8 +62,9 @@ game.LevelTrigger = me.Entity.extend({
     
     onCollision: function() {
         this.body.setCollisionMask(me.collision.types.NO_OBJECT);
-        me.levelDirector
-        
+        me.levelDirector.loadLevel(this.level);
+        me.state.current(). resetPlayer();
     }
     
 });
+
