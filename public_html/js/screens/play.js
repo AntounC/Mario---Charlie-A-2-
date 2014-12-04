@@ -7,10 +7,12 @@ game.PlayScreen = me.ScreenObject.extend({
 		game.data.score = 0;
                 
                 me.levelDirector.loadLevel("level01");
+                /*justifies what level needs to be loaded*/
                 
                 this.resetPlayer(0, 400);
-                
+                /*resets player at given point*/
                 me.input.bindKey(me.input.KEY.RIGHT, "right");
+                /*binds the right key to get mario to move to the right*/
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();
@@ -29,6 +31,7 @@ game.PlayScreen = me.ScreenObject.extend({
         resetPlayer: function(x, y) {
             var player = me.pool.pull("mario", x, y, {});
                 me.game.world.addChild(player, 7);
+                
         }
         
 });

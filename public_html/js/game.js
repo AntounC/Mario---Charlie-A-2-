@@ -40,11 +40,16 @@ var game = {
 	// Run on game resources loaded.
 	"loaded" : function () {
                 me.pool.register("mario", game.PlayerEntity, true);
+                me.pool.register("BadGuy", game.BadGuy);
                 
                 me.pool.register("levelTrigger", game.LevelTrigger);
+                /*This line of code triggers the second level when Larrimore Man (Mario) 
+                 * walks through the level*/
             
                 me.state.set(me.state.MENU, new game.TitleScreen());
+                /*sets state for title screen*/
 		me.state.set(me.state.PLAY, new game.PlayScreen());
+                /*sets state for Play screen*/
 
 		// Start the game.
 		me.state.change(me.state.MENU);
