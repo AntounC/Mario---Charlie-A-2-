@@ -49,7 +49,7 @@ var game = {
                 me.state.set(me.state.MENU, new game.TitleScreen());
                 /*sets state for title screen*/
 		me.state.set(me.state.PLAY, new game.PlayScreen());
-                /*sets state for Play screen*/
+                /*sets state for Play screen where the game takes place*/
 
 		// Start the game.
 		me.state.change(me.state.MENU);
