@@ -22,7 +22,7 @@ game.PlayerEntity = me.Entity.extend({
 
         this.body.setVelocity(5, 20);
 
-    },
+    }, 
     update: function(delta) {
         if (me.input.isKeyPressed("right")) {
             //states that if the key is pressed, then mario begins to move right
@@ -31,7 +31,7 @@ game.PlayerEntity = me.Entity.extend({
         } else {
             this.body.vel.x = 0;
         }
-
+    
         this.body.update(delta);
         me.collision.check(this, true, this.collideHandler.bind(this), true);
 
@@ -43,21 +43,10 @@ game.PlayerEntity = me.Entity.extend({
         } else {
             this.renderable.setCurrentAnimation("idle");
         }
-
-
-        this._super(me.Entity, "update", [delta]);
-        return true;
-
-    },
-    collideHandler: function(response) {
-
-    }
-
-});
-
-
-game.LevelTrigger = me.Entity.extend({
-    init: function(x, y, settings) {
+        }
+    });
+    game.LevelTrigger = me.Entity.extend({
+    init: function(x, y, settings) { 
         this._super(me.Entity, 'init', [x, y, settings]);
         this.body.onCollision = this.onCollision.bind(this);
         //sets what happens when mario colllides with an object
@@ -100,5 +89,4 @@ game.LevelTrigger = me.Entity.extend({
                 update: function(delta){
 
                 }
-                
-    });
+            });
