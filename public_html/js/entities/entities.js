@@ -22,7 +22,7 @@ game.PlayerEntity = me.Entity.extend({
 
         this.body.setVelocity(5, 20);
 
-    }, 
+    },
     update: function(delta) {
         if (me.input.isKeyPressed("right")) {
             //states that if the key is pressed, then mario begins to move right
@@ -31,7 +31,7 @@ game.PlayerEntity = me.Entity.extend({
         } else {
             this.body.vel.x = 0;
         }
-    
+
         this.body.update(delta);
         me.collision.check(this, true, this.collideHandler.bind(this), true);
 
@@ -43,10 +43,10 @@ game.PlayerEntity = me.Entity.extend({
         } else {
             this.renderable.setCurrentAnimation("idle");
         }
-        }
-    });
-    game.LevelTrigger = me.Entity.extend({
-    init: function(x, y, settings) { 
+    }
+});
+game.LevelTrigger = me.Entity.extend({
+    init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, settings]);
         this.body.onCollision = this.onCollision.bind(this);
         //sets what happens when mario colllides with an object
@@ -64,29 +64,59 @@ game.PlayerEntity = me.Entity.extend({
 
 });
 
-        game.BadGuy = me.Entity.extend({
-        init: function(x, y, settings){
-        this._super(me.Entity, 'init', [x, y, {             
+game.BadGuy = me.Entity.extend({
+    init: function(x, y, settings) {
+        this._super(me.Entity, 'init', [x, y, {
                 image: "slime",
                 spritewidth: "60",
                 spriteheight: "28",
                 width: 60,
                 height: 28,
                 getShape: function() {
-                return (new me.Rect(0, 0, 60, 28)).toPolygon();
+                    return (new me.Rect(0, 0, 60, 28)).toPolygon();
                 }
-      
 
-        }]);
-                    
+
+            }]);
+
         this.spritewidth = 60;
+        var width = settings.width;
         x = this.pos.x;
-        this.startX = x;    
+        this.startX = x;
         this.endX = x + width - this.spritewidth;
-        
-        },
-        
-                update: function(delta){
+        this.pos.x = x + width - this.spritewidth;
+        this.updateBounds();
 
-                }
-            });
+        this.alwaysUpdate = true;
+
+        this.walkLeft = false;
+        this.alive = true;
+        this.type = "badguy";
+
+        this.renderable.addAnimation("run", [0, 1, 2], 80);
+
+        this.body.setVelocity(4, 6);
+
+    },
+    update: function(delta) {
+        this.body.update(delta);
+        me.collision.check(this, true, this.collideHandler.bind(this), true);
+        
+        
+        this._super(me.Entity, "update", [delta]);
+        return true;
+        
+        if(this.alive) {
+            
+            
+        }else{
+            me.game.world.removeChild(this);
+            
+        }
+    },
+    
+    collideHandller: function() {
+         
+    }
+    
+});
