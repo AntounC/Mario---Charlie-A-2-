@@ -43,7 +43,19 @@ game.PlayerEntity = me.Entity.extend({
         } else {
             this.renderable.setCurrentAnimation("idle");
         }
-    }
+        
+        this._super(me.Entity, "update", [delta]);
+        return true;
+     },
+     
+     collideHandler: function(response){
+         if(response.b.type === 'badguy'){
+             me.state.change(me.state.MENU);
+         }
+         
+     }
+     
+    
 });
 game.LevelTrigger = me.Entity.extend({
     init: function(x, y, settings) {
@@ -75,7 +87,7 @@ game.BadGuy = me.Entity.extend({
                 getShape: function() {
                     return (new me.Rect(0, 0, 60, 28)).toPolygon();
                 }
-
+ 
 
             }]);
 
@@ -101,17 +113,23 @@ game.BadGuy = me.Entity.extend({
     update: function(delta) {
         this.body.update(delta);
         me.collision.check(this, true, this.collideHandler.bind(this), true);
-        
-        
+
+
         this._super(me.Entity, "update", [delta]);
         return true;
-        
-        if(this.alive) {
-            
-            
-        }else{
+
+        if (this.alive) {
+            if (this.walkLeft && this.pos.x <= this.startX) {
+                this.walkLeft = false;
+            } else if (!this.walkLeft && this.pos.x >= this.endX) {
+                this.walkLeft = true;
+            }
+            this.flipX(!this.walLeft);
+            this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+            //Based if this.walkLeft is true or not, the entity will move left or right
+        } else {
             me.game.world.removeChild(this);
-            
+            //stating that if the enemy is not alive, then it is removed from the map
         }
     },
     
