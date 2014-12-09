@@ -133,7 +133,7 @@ game.BadGuy = me.Entity.extend({
         }
     },
     
-    collideHandller: function() {
+    collideHandler: function() {
          
     }
     
